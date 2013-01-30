@@ -2,26 +2,7 @@
 <html>
 <head>
     <link href="js/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    
-    <style type="text/css">
-      body {
-        padding-top: 20px;
-        padding-bottom: 40px;
-      }
-
-      /* Custom container */
-      .container-narrow {
-        margin: 0 auto;
-        max-width: 700px;
-      }
-      .container-narrow > hr {
-        margin: 30px 0;
-      }
-      
-	  .masthead {
-	  	margin:0px 20px;
-	  }
-    </style>
+    <link href="css/owlypress.css" rel="stylesheet">
     <link href="js/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -29,7 +10,6 @@
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-<script src="js/pagedown/Markdown.Converter.js"></script>
 <script src="config.js"></script>
 
 <?php 
@@ -54,14 +34,20 @@ if($this->data['type'] != '' && $this->data['id']!= ''){
     	<ul class="nav nav-pills pull-right" id="page-menu">
 
         </ul>
-        <h3 class="muted" id="pageTitle">Owlypress</h3>
-      </div>
+        <a href="#"><h3 class="muted" id="pageTitle">Owlypress</h3></a>
+    </div>
 
 	<div id="content">
 
 	</div>
+	
+	<div id="socialmedia_iconbar">
+		<ul id="socialmedia">
+			
+		</ul>
+	</div>
 </div>
-
+<script src="js/pagedown/Markdown.Converter.js"></script>
 <script src="js/jquery-1.8.3.js"></script>
 <script src="js/bootstrap/js/bootstrap.min.js"></script>
 <script src="js/pagedown/Markdown.Converter.js"></script>

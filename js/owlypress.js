@@ -2,7 +2,7 @@
     //"use strict";
 	var converter = new Markdown.Converter();
 	
-	$('#pageTitle').html($owlypressConfig["title"])
+	$('#pageTitle').html(owlypressConfig["title"])
 
     // get page list, build menu
     var getPages = function(){
@@ -63,14 +63,24 @@
 			getPage(loadWith['id']);
 		}else if(loadWith['type'] == 'post'){
 			getPost(loadWith['id']);
+		}else{
+			loadPosts(owlypressConfig["initialPosts"]);
 		}
 	}else{
-		loadPosts($owlypressConfig["initialPosts"]);
+		loadPosts(owlypressConfig["initialPosts"]);
 	}
 	
 	// render menu
 	var renderMenu = function(pageList){
-		var link = link = $('<li><a href="#">Home</a></li>');
+		$('#pageTitle').click(function(){
+			var func = loadPosts;
+			
+			return function(){
+				func(10);
+			};
+		}());
+		
+		var link = $('<li><a href="#">Home</a></li>');
 
 		$(link).click(function(){
 			var func = loadPosts;
@@ -79,6 +89,7 @@
 				func(10);
 			};
 		}());
+		
 		$('#page-menu').append(link)
 		
 		$.each(pageList, function(index, element){
@@ -96,4 +107,16 @@
 			$('#content').append('<div class="post well">'+converter.makeHtml(post)+"</div>");
 		});
 	}
+	
+	var renderSocialMediaBar = function(){
+		if(owlypressConfig.hasOwnProperty('email')){
+			$('#socialmedia').append('<li><a href="mailto:' + owlypressConfig['email'] + '"><img src="img/email.png" alt="Email"></a></li>');
+		}
+		if(owlypressConfig.hasOwnProperty('twitter')){
+			$('#socialmedia').append('<li><a href="https://twitter.com/#!/' + owlypressConfig['twitter'] + '"><img src="img/twitter.png" alt="Twitter"></a></li>');
+		}
+		if(owlypressConfig.hasOwnProperty('github')){
+			$('#socialmedia').append('<li><a href="https://github.com/' + owlypressConfig['github'] + '"><img src="img/github.png" alt="GitHub"></a></li>');
+		}
+	}();
 })();
