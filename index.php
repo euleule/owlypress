@@ -6,12 +6,24 @@ $POSTDIR = 'data/posts';
 \Slim\Slim::registerAutoloader();
 $app = new \Slim\Slim();
 
+$app->hook('slim.before.dispatch', function() use ($app) {
+    $app->view()->appendData(array(
+        'app_base' => str_replace('index.php','',$app->request()->getRootUri())
+    ));
+});
+
 // GET route
-$app->get('/', function () {
+$app->get('/', function() use ($app){
+	$viewData = array();
+    $type = $app->request()->params('type');
+    $viewData['type'] = $type;
+	$id = $app->request()->params('id');
+	$viewData['id'] = $id;
+	$app->render('owlypressTemplate.php', $viewData);
 });
 
 //get last number of posts
-$app->get('/posts/:number', function($number) use ($app, $POSTDIR){
+$app->get('/getPosts/:number', function($number) use ($app, $POSTDIR){
 	$res = $app->response();
 	$data = array();
 	if(is_dir($POSTDIR)){
@@ -35,7 +47,7 @@ $app->get('/posts/:number', function($number) use ($app, $POSTDIR){
 });
 
 //get post by name
-$app->get('/post/:postId',function($postId) use ($app, $POSTDIR){
+$app->get('/posts/:postId',function($postId) use ($app, $POSTDIR){
 	$res = $app->response();
 	$data = array();
 	if(is_dir($POSTDIR)){
@@ -44,7 +56,7 @@ $app->get('/post/:postId',function($postId) use ($app, $POSTDIR){
 		array_shift($files);
 		array_shift($files);
 		if(in_array($postId, $files)){
-			$content = file_get_contents($PAGEDIR.'/'.$postId);
+			$content = file_get_contents($POSTDIR.'/'.$postId);
 			$data['content'] = $content;
 			$res->write(json_encode($data));
 		}else{
@@ -74,7 +86,7 @@ $app->get('/pages', function() use ($app, $PAGEDIR){
 });
 
 //get page by id
-$app->get('/page/:pageId', function($pageId)use ($app, $PAGEDIR){
+$app->get('/pages/:pageId', function($pageId)use ($app, $PAGEDIR){
 	$res = $app->response();
 	$data = array();
 	if(is_dir($PAGEDIR)){

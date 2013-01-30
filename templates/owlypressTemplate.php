@@ -31,6 +31,22 @@
 
 <script src="js/pagedown/Markdown.Converter.js"></script>
 <script src="config.js"></script>
+
+<?php 
+if($this->data['type'] != '' && $this->data['id']!= ''){
+?>
+<script> var loadWith = {
+	'type' : '<?php print strip_tags($this->data['type']); ?>',
+	'id' : '<?php print strip_tags($this->data['id']); ?>'
+};
+</script>
+<?php
+}else{
+?>
+<script> var loadWith = undefined; </script>
+<?php
+}
+?>
 </head>
 <body>
 <div class="container-narrow">
@@ -38,7 +54,7 @@
     	<ul class="nav nav-pills pull-right" id="page-menu">
 
         </ul>
-        <h3 class="muted" id="pageTitle">simbl</h3>
+        <h3 class="muted" id="pageTitle">Owlypress</h3>
       </div>
 
 	<div id="content">
@@ -52,4 +68,3 @@
 <script src="js/owlypress.js"></script>
 </body>
 </html>
-

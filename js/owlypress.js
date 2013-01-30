@@ -1,5 +1,5 @@
 (function(){
-    "use strict";
+    //"use strict";
 	var converter = new Markdown.Converter();
 	
 	$('#pageTitle').html($owlypressConfig["title"])
@@ -7,10 +7,10 @@
     // get page list, build menu
     var getPages = function(){
     	$.ajax({
-			url : "app.php/pages",
+			url : "index.php/pages",
 			type : "get",
 			success : function (responseData) {
-				renderPages(responseData['files']);
+				renderMenu(responseData['files']);
 			},
 			error: function(jqXHR, textStatus, errorThrown){
 				$('#content').replaceWith('<div id="content" style="padding-top:60px;">' + jqXHR.responseText + '</div>');
@@ -21,7 +21,7 @@
 	// get first n posts
 	var loadPosts = function(number){
 		$.ajax({
-			url : "app.php/posts/"+number,
+			url : "index.php/getPosts/"+number,
 			type : "get",
 			success : function (responseData) {
 				renderPosts(responseData);
@@ -32,10 +32,44 @@
 		});
 	};
 	
-	loadPosts($owlypressConfig["initialPosts"]);
+	var getPage = function(pageId){
+		$.ajax({
+			url : "index.php/pages/" + pageId,
+			type : "get",
+			success : function (responseData) {
+				$('#content').replaceWith('<div class="well" id="content">' + converter.makeHtml(responseData.content) + '</div>');
+			},
+			error: function(jqXHR, textStatus, errorThrown){
+				$('#content').replaceWith('<div id="content" style="padding-top:60px;">' + jqXHR.responseText + '</div>');
+			}
+		});
+	};
 	
-	// render page menu
-	var renderPages = function(pageList){
+	var getPost = function(postId){
+		$.ajax({
+			url : "index.php/posts/" + postId,
+			type : "get",
+			success : function (responseData) {
+				$('#content').replaceWith('<div class="well" id="content">' + converter.makeHtml(responseData.content) + '</div>');
+			},
+			error: function(jqXHR, textStatus, errorThrown){
+				$('#content').replaceWith('<div id="content" style="padding-top:60px;">' + jqXHR.responseText + '</div>');
+			}
+		});
+	};
+	
+	if(loadWith !== undefined){
+		if(loadWith['type'] == 'page'){
+			getPage(loadWith['id']);
+		}else if(loadWith['type'] == 'post'){
+			getPost(loadWith['id']);
+		}
+	}else{
+		loadPosts($owlypressConfig["initialPosts"]);
+	}
+	
+	// render menu
+	var renderMenu = function(pageList){
 		var link = link = $('<li><a href="#">Home</a></li>');
 
 		$(link).click(function(){
@@ -50,16 +84,7 @@
 		$.each(pageList, function(index, element){
 			link = $('<li><a href="#">' + element.replace(/\.[^/.]+$/, "") + '</a></li>');
 			$(link).click( {'page':element},function(event){
-				$.ajax({
-					url : "app.php/page/" + event.data.page,
-					type : "get",
-					success : function (responseData) {
-						$('#content').replaceWith('<div class="well" id="content">' + converter.makeHtml(responseData.content) + '</div>');
-					},
-					error: function(jqXHR, textStatus, errorThrown){
-						$('#content').replaceWith('<div id="content" style="padding-top:60px;">' + jqXHR.responseText + '</div>');
-					}
-				});
+				getPage(event.data.page);
 			});
 			$('#page-menu').append(link);
 		});
