@@ -1,9 +1,21 @@
+html,
 body {
-	padding-top: 20px;
-	padding-bottom: 40px;
+	height: 100%;
 }
 
-/* Custom container */
+body {
+	padding-top: 10px;
+}
+
+.container {
+	width: auto;
+	max-width: 660px;
+}
+
+.container .credit {
+	margin: 15px 0;
+}
+      
 .container-narrow {
 	margin: 0 auto;
 	max-width: 700px;
@@ -42,4 +54,18 @@ body {
 
 #socialmedia_iconbar img{
 	margin-bottom: 15px;
+}
+
+#footer {
+	height: 50px;
+}
+
+/* Lastly, apply responsive CSS fixes as necessary */
+@media (max-width: 767px) {
+	#footer {
+		margin-left: 0px;
+		margin-right: -20px;
+		padding-left: 15px;
+		padding-right: 20px;
+	}
 }

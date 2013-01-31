@@ -3,5 +3,6 @@ owlypressConfig = {
     "initialPosts": 10,
 	"twitter": "Owlypress",
 	"email": "owlypress@gmail.com",
-	"github": "euleule/owlypress"
+	"github": "euleule/owlypress",
+	"author": "Robert Krause"
 }

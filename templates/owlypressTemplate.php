@@ -33,8 +33,8 @@ if($this->data['type'] != '' && $this->data['id']!= ''){
 	<div class="masthead">
     	<ul class="nav nav-pills pull-right" id="page-menu">
 
-        </ul>
-        <a href="#"><h3 class="muted" id="pageTitle">Owlypress</h3></a>
+       	</ul>
+   	    <a href="#"><h3 class="muted" id="pageTitle">Owlypress</h3></a>
     </div>
 
 	<div id="content">
@@ -47,6 +47,15 @@ if($this->data['type'] != '' && $this->data['id']!= ''){
 		</ul>
 	</div>
 </div>
+
+<div id="footer">
+    <div class="container">
+        <p class="muted credit" id="credit">
+
+        </p>
+	</div>
+</div>
+
 <script src="js/pagedown/Markdown.Converter.js"></script>
 <script src="js/jquery-1.8.3.js"></script>
 <script src="js/bootstrap/js/bootstrap.min.js"></script>

@@ -1,8 +1,6 @@
 (function(){
     //"use strict";
 	var converter = new Markdown.Converter();
-	
-	$('#pageTitle').html(owlypressConfig["title"])
 
     // get page list, build menu
     var getPages = function(){
@@ -108,7 +106,13 @@
 		});
 	}
 	
-	var renderSocialMediaBar = function(){
+	var renderConfig = function(){
+		// render page title
+		if(owlypressConfig.hasOwnProperty('title')){
+			$('#pageTitle').html(owlypressConfig["title"]);
+		}
+		
+		// render social media icons
 		if(owlypressConfig.hasOwnProperty('email')){
 			$('#socialmedia').append('<li><a href="mailto:' + owlypressConfig['email'] + '"><img src="img/email.png" alt="Email"></a></li>');
 		}
@@ -118,5 +122,18 @@
 		if(owlypressConfig.hasOwnProperty('github')){
 			$('#socialmedia').append('<li><a href="https://github.com/' + owlypressConfig['github'] + '"><img src="img/github.png" alt="GitHub"></a></li>');
 		}
+
+		// render credits for footer
+		var credit = "";
+		if(owlypressConfig.hasOwnProperty('author')){
+			if(owlypressConfig.hasOwnProperty('title')){
+				credit += owlypressConfig["title"] + " is made with love by ";
+			}else{
+				credit += "Made with love by ";
+			}
+			credit += owlypressConfig["author"] + ". ";
+		}
+		credit += "Powerd by <a href=\"http://owlypress.net\">Owlypress</a>.";
+		$("#credit").html(credit);
 	}();
 })();

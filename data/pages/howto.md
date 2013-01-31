@@ -19,7 +19,6 @@ Since you do not want to host a second Owlypress site, you should make some chan
 	<th>Description</th>
 	<th>Default</th>
 	<th>Possible values / notes</th>
-	<th>not used</th>
 </tr>
 <tr>
 	<td>title</td>
@@ -29,10 +28,9 @@ Since you do not want to host a second Owlypress site, you should make some chan
 </tr>
 <tr>
 	<td>author</td>
-	<td>Your name or pseudonym</td>
+	<td>Your name or pseudonym used for credits</td>
 	<td></td>
 	<td>You might need to change the encoding in the template if you have a non UTF-8 	name</td>
-	<td>X</td>
 </tr>
 <tr>
 	<td>email</td>
@@ -51,6 +49,12 @@ Since you do not want to host a second Owlypress site, you should make some chan
 	<td>Link to a github profile or project</td>
 	<td></td>
 	<td>a github username (e.g. euleule) or project (e.g. euleule/owlypress)</td>
+</tr>
+<tr>
+	<td>initialPosts</td>
+	<td>Number of posts shown as default</td>
+	<td>10</td>
+	<td>Any natural number. Uses default value if parameter is invalid.</td>
 </tr>
 <tr>
 	<td></td>
