@@ -56,7 +56,6 @@ if($this->data['type'] != '' && $this->data['id']!= ''){
 	</div>
 </div>
 
-<script src="js/pagedown/Markdown.Converter.js"></script>
 <script src="js/jquery-1.8.3.js"></script>
 <script src="js/bootstrap/js/bootstrap.min.js"></script>
 <script src="js/pagedown/Markdown.Converter.js"></script>

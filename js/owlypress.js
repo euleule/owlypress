@@ -1,8 +1,8 @@
 (function(){
-    //"use strict";
+    "use strict";
 	var converter = new Markdown.Converter();
 
-    // get page list, build menu
+    // get a list of all pages and call the render menu func
     var getPages = function(){
     	$.ajax({
 			url : "index.php/pages",
@@ -16,7 +16,7 @@
 		});
 	}();
 	
-	// get first n posts
+	// get first number of posts and render them to context area
 	var loadPosts = function(number){
 		$.ajax({
 			url : "index.php/getPosts/"+number,
@@ -30,6 +30,7 @@
 		});
 	};
 	
+	// get page by id and render it to the content area
 	var getPage = function(pageId){
 		$.ajax({
 			url : "index.php/pages/" + pageId,
@@ -43,6 +44,7 @@
 		});
 	};
 	
+	// get post by id and render it to content area
 	var getPost = function(postId){
 		$.ajax({
 			url : "index.php/posts/" + postId,
@@ -56,6 +58,7 @@
 		});
 	};
 	
+	// load page or post initially, if it is specified
 	if(loadWith !== undefined){
 		if(loadWith['type'] == 'page'){
 			getPage(loadWith['id']);
@@ -68,8 +71,10 @@
 		loadPosts(owlypressConfig["initialPosts"]);
 	}
 	
-	// render menu
+	// render home and pages menu
 	var renderMenu = function(pageList){
+	
+		// make blog title clickable
 		$('#pageTitle').click(function(){
 			var func = loadPosts;
 			
@@ -78,8 +83,8 @@
 			};
 		}());
 		
+		// build home menu item
 		var link = $('<li><a href="#">Home</a></li>');
-
 		$(link).click(function(){
 			var func = loadPosts;
 			
@@ -87,9 +92,9 @@
 				func(10);
 			};
 		}());
-		
 		$('#page-menu').append(link)
 		
+		// build menu items for each page
 		$.each(pageList, function(index, element){
 			link = $('<li><a href="#">' + element.replace(/\.[^/.]+$/, "") + '</a></li>');
 			$(link).click( {'page':element},function(event){
@@ -99,6 +104,7 @@
 		});
 	};
 	
+	// render a list of posts to the content area
 	var renderPosts = function(postData){
 		$('#content').replaceWith('<div id="content"></div>');
 		$.each(postData, function(index, post){
@@ -106,6 +112,7 @@
 		});
 	}
 	
+	// render configuration object and build additional page elements
 	var renderConfig = function(){
 		// render page title
 		if(owlypressConfig.hasOwnProperty('title')){
