@@ -2,8 +2,8 @@
 <html>
 <head>
     <link href="js/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link href="css/owlypress.css" rel="stylesheet">
     <link href="js/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="css/owlypress.css" rel="stylesheet">
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -56,9 +56,11 @@ if($this->data['type'] != '' && $this->data['id']!= ''){
 	</div>
 </div>
 
-<script src="js/jquery-1.8.3.js"></script>
+<script src="http://code.jquery.com/jquery-1.9.0.min.js"></script>
 <script src="js/bootstrap/js/bootstrap.min.js"></script>
 <script src="js/pagedown/Markdown.Converter.js"></script>
 <script src="js/owlypress.js"></script>
+
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 </body>
 </html>

@@ -104,11 +104,26 @@
 		});
 	};
 	
+	var buildLink = function(type, id){
+		var link = "" + window.location;
+		link = link.split('?')[0];
+		link = link.replace('#','') + "?type=" + type + "&id=" + id;
+		return link;
+	}
+	
 	// render a list of posts to the content area
 	var renderPosts = function(postData){
 		$('#content').replaceWith('<div id="content"></div>');
-		$.each(postData, function(index, post){
-			$('#content').append('<div class="post well">'+converter.makeHtml(post)+"</div>");
+		$.each(postData, function(index, postMarkdown){
+			var link = buildLink('post', index);
+			var pageLink = "<p class=\"muted\">Link: <a href=\""+link+"\" class=\"muted\">"+link+"</a></p>";
+			
+			var post = '<div class="post well">';
+			post += converter.makeHtml(postMarkdown);
+			post += pageLink;
+
+			post +='</div>';
+			$('#content').append(post);
 		});
 	}
 	
