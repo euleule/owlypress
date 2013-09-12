@@ -70,6 +70,12 @@ body {
 	height: 50px;
 }
 
+.circle {
+    background-color: #ccc;
+    padding: 10px;
+    border-radius: 50%;
+}
+
 /* Lastly, apply responsive CSS fixes as necessary */
 @media (max-width: 767px) {
 	#footer {
@@ -80,8 +86,19 @@ body {
 	}
 }
 
-.circle {
-    background-color: #ccc;
-    padding: 10px;
-    border-radius: 50%;
+@media (max-width: 815px) {
+	#socialmedia_iconbar {
+		position: relative;
+		display:block;
+		width:auto;
+		height:70px;
+		top:auto;
+		left:auto;
+		padding: 0px;
+	}
+	
+	#socialmedia_iconbar li{
+		float:left;
+		margin-right: 10px;
+	}
 }
