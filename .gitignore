@@ -1,0 +1,11 @@
+#eclipse noise
+.buildpath
+.settings/
+.project
+
+#os noise
+.DS_Store
+
+#composer stuff
+composer.lock
+vendor/

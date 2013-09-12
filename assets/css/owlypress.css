@@ -50,10 +50,20 @@ body {
 }
 #socialmedia_iconbar li{
 	width: 30px;
+	height: 30px;
+	background-color: #eee;
+    padding: 10px;
+    margin-bottom:10px;
+    border: 1px solid #ddd;
+    border-radius: 10%;
+}
+
+#socialmedia_iconbar li:hover, #loadmore:hover {
+	background-color: #08c;
 }
 
 #socialmedia_iconbar img{
-	margin-bottom: 15px;
+	padding-top: 3px;
 }
 
 #footer {
@@ -68,4 +78,10 @@ body {
 		padding-left: 15px;
 		padding-right: 20px;
 	}
+}
+
+.circle {
+    background-color: #ccc;
+    padding: 10px;
+    border-radius: 50%;
 }

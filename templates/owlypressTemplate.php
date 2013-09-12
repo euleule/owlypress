@@ -1,9 +1,9 @@
 <!doctype html>
 <html>
 <head>
-    <link href="js/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link href="js/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
-    <link href="css/owlypress.css" rel="stylesheet">
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="assets/css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="assets/css/owlypress.css" rel="stylesheet">
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -46,6 +46,13 @@ if($this->data['type'] != '' && $this->data['id']!= ''){
 			
 		</ul>
 	</div>
+	<div id="loadmore" class="well well-small" data-toggle="tooltip" title="Load more">
+		<div class="pagination-centered" style="margin:10px 0;">
+			<span class="circle">
+				<i class="icon-chevron-down icon-white"></i>
+			</span>
+		</div>
+	</div>
 </div>
 
 <div id="footer">
@@ -56,11 +63,9 @@ if($this->data['type'] != '' && $this->data['id']!= ''){
 	</div>
 </div>
 
-<script src="http://code.jquery.com/jquery-1.9.0.min.js"></script>
-<script src="js/bootstrap/js/bootstrap.min.js"></script>
-<script src="js/pagedown/Markdown.Converter.js"></script>
-<script src="js/owlypress.js"></script>
-
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<script src="assets/js/jquery-1.8.3.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/Markdown.Converter.js"></script>
+<script src="assets/js/owlypress.js"></script>
 </body>
 </html>

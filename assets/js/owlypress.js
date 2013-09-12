@@ -1,6 +1,7 @@
 (function(){
     "use strict";
 	var converter = new Markdown.Converter();
+	var posts;
 
     // get a list of all pages and call the render menu func
     var getPages = function(){
@@ -28,6 +29,7 @@
 				$('#content').replaceWith('<div id="content" style="padding-top:60px;">' + jqXHR.responseText + '</div>');
 			}
 		});
+		$('#loadmore').show();
 	};
 	
 	// get page by id and render it to the content area
@@ -37,6 +39,7 @@
 			type : "get",
 			success : function (responseData) {
 				$('#content').replaceWith('<div class="well" id="content">' + converter.makeHtml(responseData.content) + '</div>');
+				$('#loadmore').hide();
 			},
 			error: function(jqXHR, textStatus, errorThrown){
 				$('#content').replaceWith('<div id="content" style="padding-top:60px;">' + jqXHR.responseText + '</div>');
@@ -51,6 +54,7 @@
 			type : "get",
 			success : function (responseData) {
 				$('#content').replaceWith('<div class="well" id="content">' + converter.makeHtml(responseData.content) + '</div>');
+				$('#loadmore').hide();
 			},
 			error: function(jqXHR, textStatus, errorThrown){
 				$('#content').replaceWith('<div id="content" style="padding-top:60px;">' + jqXHR.responseText + '</div>');
@@ -66,9 +70,11 @@
 			getPost(loadWith['id']);
 		}else{
 			loadPosts(owlypressConfig["initialPosts"]);
+			posts = owlypressConfig["initialPosts"];
 		}
 	}else{
 		loadPosts(owlypressConfig["initialPosts"]);
+		posts = owlypressConfig["initialPosts"];;
 	}
 	
 	// render home and pages menu
@@ -136,13 +142,13 @@
 		
 		// render social media icons
 		if(owlypressConfig.hasOwnProperty('email')){
-			$('#socialmedia').append('<li><a href="mailto:' + owlypressConfig['email'] + '"><img src="img/email.png" alt="Email"></a></li>');
+			$('#socialmedia').append('<li><a href="mailto:' + owlypressConfig['email'] + '"><img src="assets/img/email.png" alt="Email"></a></li>');
 		}
 		if(owlypressConfig.hasOwnProperty('twitter')){
-			$('#socialmedia').append('<li><a href="https://twitter.com/#!/' + owlypressConfig['twitter'] + '"><img src="img/twitter.png" alt="Twitter"></a></li>');
+			$('#socialmedia').append('<li><a href="https://twitter.com/#!/' + owlypressConfig['twitter'] + '"><img src="assets/img/twitter.png" alt="Twitter"></a></li>');
 		}
 		if(owlypressConfig.hasOwnProperty('github')){
-			$('#socialmedia').append('<li><a href="https://github.com/' + owlypressConfig['github'] + '"><img src="img/github.png" alt="GitHub"></a></li>');
+			$('#socialmedia').append('<li><a href="https://github.com/' + owlypressConfig['github'] + '"><img src="assets/img/github.png" alt="GitHub"></a></li>');
 		}
 
 		// render credits for footer
@@ -158,4 +164,11 @@
 		credit += "Powerd by <a href=\"http://owlypress.net\">Owlypress</a>.";
 		$("#credit").html(credit);
 	}();
+
+	$('#loadmore').click(function(){
+		posts++;
+		loadPosts(posts);
+	});
+	
+	$('#loadmore').tooltip();
 })();

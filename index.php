@@ -1,5 +1,5 @@
 <?php
-require 'Slim/Slim.php';
+require 'vendor/autoload.php';
 $PAGEDIR = 'data/pages';
 $POSTDIR = 'data/posts';
 
