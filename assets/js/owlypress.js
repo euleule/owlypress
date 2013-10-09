@@ -27,7 +27,6 @@
 			url : "index.php/getPosts/"+number,
 			type : "get",
 			success : function (response) {
-console.log(response);
 				if(response.more){
 					$('#loadmore').show();					
 				}else{

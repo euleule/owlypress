@@ -30,8 +30,8 @@ $app->get('/getPosts/:number', function($number) use ($app, $POSTDIR){
 		$files = scandir($POSTDIR,1);
 		array_pop($files);
 		array_pop($files);
-		$nFiles = count($files);
-		if($number > 0 && $number <= $nFiles){
+		$length = $nFiles = count($files);
+		if($number > 0 && $number <= $length){
 			$length = $number;
 		}
 		$files = array_slice($files, 0, $length);
