@@ -1,7 +1,10 @@
 (function(){
     "use strict";
 	var converter = new Markdown.Converter();
-	var posts;
+	var postCache = {};
+	var pageCache = {"asdf":"asdf"};
+	var nPosts;
+	window.p = postCache;
 
     // get a list of all pages and call the render menu func
     var getPages = function(){
@@ -19,48 +22,89 @@
 	
 	// get first number of posts and render them to context area
 	var loadPosts = function(number){
+		$('#content').replaceWith('<div id="content"></div>');
 		$.ajax({
 			url : "index.php/getPosts/"+number,
 			type : "get",
-			success : function (responseData) {
-				renderPosts(responseData);
+			success : function (response) {
+console.log(response);
+				if(response.more){
+					$('#loadmore').show();					
+				}else{
+					$('#loadmore').hide();
+				}
+				
+				$.each(response.ids, function(index, postId){
+					getPost(postId, true);
+				});
 			},
 			error: function(jqXHR, textStatus, errorThrown){
 				$('#content').replaceWith('<div id="content" style="padding-top:60px;">' + jqXHR.responseText + '</div>');
 			}
 		});
-		$('#loadmore').show();
 	};
 	
 	// get page by id and render it to the content area
 	var getPage = function(pageId){
-		$.ajax({
-			url : "index.php/pages/" + pageId,
-			type : "get",
-			success : function (responseData) {
-				$('#content').replaceWith('<div class="well" id="content">' + converter.makeHtml(responseData.content) + '</div>');
-				$('#loadmore').hide();
-			},
-			error: function(jqXHR, textStatus, errorThrown){
-				$('#content').replaceWith('<div id="content" style="padding-top:60px;">' + jqXHR.responseText + '</div>');
-			}
-		});
+		if (pageCache.hasOwnProperty(pageId)){
+			renderPage(pageCache[pageId]);
+		}else{
+			$.ajax({
+				url : "index.php/pages/" + pageId,
+				type : "get",
+				success : function (responseData) {
+					renderPage(responseData.content);
+					pageCache[pageId] = responseData.content;
+				},
+				error: function(jqXHR, textStatus, errorThrown){
+					$('#content').replaceWith('<div id="content" style="padding-top:60px;">' + jqXHR.responseText + '</div>');
+				}
+			});
+		}
 	};
 	
+	var renderPage = function(content){
+		$('#content').replaceWith('<div class="well" id="content">' + converter.makeHtml(content) + '</div>');
+		$('#loadmore').hide();
+	}
+	
 	// get post by id and render it to content area
-	var getPost = function(postId){
-		$.ajax({
-			url : "index.php/posts/" + postId,
-			type : "get",
-			success : function (responseData) {
-				$('#content').replaceWith('<div class="well" id="content">' + converter.makeHtml(responseData.content) + '</div>');
-				$('#loadmore').hide();
-			},
-			error: function(jqXHR, textStatus, errorThrown){
-				$('#content').replaceWith('<div id="content" style="padding-top:60px;">' + jqXHR.responseText + '</div>');
-			}
-		});
+	var getPost = function(postId, append){
+		append = typeof append !== 'undefined' ? append : false;
+
+		if(postCache.hasOwnProperty(postId)){
+			renderPost(postCache[postId], postId, append);
+		}else{
+			$.ajax({
+				url : "index.php/posts/" + postId,
+				type : "get",
+				success : function (responseData) {
+					renderPost(responseData.content, postId, append);
+					postCache[postId] = responseData.content;
+				},
+				error: function(jqXHR, textStatus, errorThrown){
+					$('#content').replaceWith('<div id="content" style="padding-top:60px;">' + jqXHR.responseText + '</div>');
+				}
+			});
+		}
 	};
+	
+	var renderPost = function(content, postId, append){
+		if(append){
+			var link = buildLink('post', postId);
+			var pageLink = "<p class=\"muted\">Link: <a href=\""+link+"\" class=\"muted\">"+link+"</a></p>";
+			
+			var post = '<div class="post well">';
+			post += converter.makeHtml(content);
+			post += pageLink;
+
+			post +='</div>';
+			$('#content').append(post);
+		}else{
+			$('#content').replaceWith('<div class="well" id="content">' + converter.makeHtml(content) + '</div>');
+			$('#loadmore').hide();
+		}
+	}
 	
 	// load page or post initially, if it is specified
 	if(loadWith !== undefined){
@@ -70,11 +114,11 @@
 			getPost(loadWith['id']);
 		}else{
 			loadPosts(owlypressConfig["initialPosts"]);
-			posts = owlypressConfig["initialPosts"];
+			nPosts = owlypressConfig["initialPosts"];
 		}
 	}else{
 		loadPosts(owlypressConfig["initialPosts"]);
-		posts = owlypressConfig["initialPosts"];;
+		nPosts = owlypressConfig["initialPosts"];;
 	}
 	
 	// render home and pages menu
@@ -117,22 +161,6 @@
 		return link;
 	}
 	
-	// render a list of posts to the content area
-	var renderPosts = function(postData){
-		$('#content').replaceWith('<div id="content"></div>');
-		$.each(postData, function(index, postMarkdown){
-			var link = buildLink('post', index);
-			var pageLink = "<p class=\"muted\">Link: <a href=\""+link+"\" class=\"muted\">"+link+"</a></p>";
-			
-			var post = '<div class="post well">';
-			post += converter.makeHtml(postMarkdown);
-			post += pageLink;
-
-			post +='</div>';
-			$('#content').append(post);
-		});
-	}
-	
 	// render configuration object and build additional page elements
 	var renderConfig = function(){
 		// render page title
@@ -166,8 +194,8 @@
 	}();
 
 	$('#loadmore').click(function(){
-		posts++;
-		loadPosts(posts);
+		nPosts++;
+		loadPosts(nPosts);
 	});
 	
 	$('#loadmore').tooltip();

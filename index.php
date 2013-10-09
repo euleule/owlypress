@@ -25,20 +25,24 @@ $app->get('/', function() use ($app){
 //get last number of posts
 $app->get('/getPosts/:number', function($number) use ($app, $POSTDIR){
 	$res = $app->response();
-	$data = array();
 	if(is_dir($POSTDIR)){
 		$res['Content-Type'] = 'application/json';
 		$files = scandir($POSTDIR,1);
 		array_pop($files);
 		array_pop($files);
-		$length= count($files);
-		if($number > 0 && $number < $length){
+		$nFiles = count($files);
+		if($number > 0 && $number <= $nFiles){
 			$length = $number;
 		}
 		$files = array_slice($files, 0, $length);
+		$ids = array();
 		foreach($files as $postId){
-			$data[$postId] = file_get_contents($POSTDIR.'/'.$postId);
+			array_push($ids, $postId);
 		}
+		$data = array(
+				"ids" => $ids,
+				"more" => $nFiles > $number
+		);
 		$res->write(json_encode($data));	
 	}else{
 		$res->status(500);
