@@ -2,14 +2,13 @@
     "use strict";
 	var converter = new Markdown.Converter();
 	var postCache = {};
-	var pageCache = {"asdf":"asdf"};
+	var pageCache = {};
 	var nPosts;
-	window.p = postCache;
 
     // get a list of all pages and call the render menu func
     var getPages = function(){
     	$.ajax({
-			url : "index.php/pages",
+			url : "pages",
 			type : "get",
 			success : function (responseData) {
 				renderMenu(responseData['files']);
@@ -24,7 +23,7 @@
 	var loadPosts = function(number){
 		$('#content').replaceWith('<div id="content"></div>');
 		$.ajax({
-			url : "index.php/getPosts/"+number,
+			url : "getPosts/"+number,
 			type : "get",
 			success : function (response) {
 				if(response.more){
@@ -49,7 +48,7 @@
 			renderPage(pageCache[pageId]);
 		}else{
 			$.ajax({
-				url : "index.php/pages/" + pageId,
+				url : "pages/" + pageId,
 				type : "get",
 				success : function (responseData) {
 					renderPage(responseData.content);
@@ -75,7 +74,7 @@
 			renderPost(postCache[postId], postId, append);
 		}else{
 			$.ajax({
-				url : "index.php/posts/" + postId,
+				url : "posts/" + postId,
 				type : "get",
 				success : function (responseData) {
 					renderPost(responseData.content, postId, append);
