@@ -15,7 +15,13 @@ Features:
 
 ##Installation
 
-Download all files and upload them to your webserver.
+Download all files.
+
+After that you need to run [composer](https://getcomposer.org/) to install the dependencies.
+
+    composer install
+    
+Now upload everything to your Webserver.
 
 Yep, that is all you need to do!
 
